@@ -1,0 +1,11 @@
+1. Sinh dữ liệu giả lập với Faker hoặc Dummy APIs.
+2. Stream dữ liệu real-time từ hệ thống sử dụng Apache Kafka.
+3. Xử lý dữ liệu real-time với Apache Spark và tính toán các chỉ số cần thiết.
+4. Lưu trữ dữ liệu trong MongoDB. 
+5. Thiết kế và triển khai dashboard trong Figma, chuyển đổi thành HTML, kết nối với MongoDB để hiển thị dữ liệu real-time.
+6. Cập nhật và theo dõi dữ liệu real-time trong dashboard.
+7. Tích hợp AI:
+    * Chuẩn bị dữ liệu cho Machine Learning.
+    * Xây dựng mô hình.
+    * Tích hợp mô hình vào hệ thống để dự đoán các chỉ số sản phẩm.
+    * Cập nhật và tái huấn luyện mô hình dựa trên dữ liệu mới.
