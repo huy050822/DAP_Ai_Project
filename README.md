@@ -89,10 +89,9 @@ We welcome contributions to this project! Please follow these steps:
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Contributors
-- [Your Name](https://github.com/yourusername) - Project Lead
-- [DucAnh](https://github.com/SENULT) - Website
-- [Contributor 2](https://github.com/contributor2) - AI Integration
-- 
+- [Quang Huy](https://github.com/huy050822) - Project Lead
+- [Duc Anh](https://github.com/SENULT) - Website
+- [Thien An](https://github.com/philipannt) - AI Integration
 
 ## 📞 Contact
 For any questions or suggestions, please reach out to:
