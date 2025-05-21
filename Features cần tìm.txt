@@ -1,0 +1,10 @@
+Features cần tìm :  
++ Product_ID  
++ Name_Product 
++ Product_Price 
++ Quantity_Product 
++ Invoice_Date 
++ Location_Customer 
++ Customer_ID 
++ Name_Customer 
++ Informatin_Customer ( cái này tùy có cái nào cũng đc )
