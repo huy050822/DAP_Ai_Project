@@ -2,7 +2,7 @@
 
 ## AI-Powered E-Commerce Business Forecasting & Insights
 
-[Figma Design Review]()
+[Figma Design Review](https://www.figma.com/proto/FG44yDBCEHTghcRwFu4Wyi/DAP301m?node-id=63-2983&p=f&t=fiadxzHGGoiNCquo-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)<br>
 [Website Review]()
 
 
