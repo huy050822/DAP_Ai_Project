@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAP_PROJECT</title>    
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">            
+            <div class="logo-section">
+                <img src="src/images/logo.png" alt="Logo" class="logo dark-logo">
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="active">
+                            <i class="fas fa-chart-pie nav-icon"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-box nav-icon"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>                    <li>
+                        <a href="#">
+                            <i class="fas fa-users nav-icon"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-shopping-cart nav-icon"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-credit-card nav-icon"></i>
+                            <span>Checkout</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-cog nav-icon"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-brain nav-icon"></i>
+                            <span>AI-based Pricing & Recommendations</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-button">
+                    <img src="src/images/logout-icon.png" alt="Logout" class="nav-icon">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <i class="fas fa-bars menu-toggle"></i> <h1>Overview</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search">                    </div>                    <a href="dark.html" class="theme-toggle" title="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </a>
+                    <i class="fas fa-bell notification-icon"></i>
+                    <img src="placeholder-avatar.png" alt="User Avatar" class="user-avatar">
+                </div>
+            </header>
+
+            <section class="welcome-section">
+                <h2>Welcome back, Chris</h2>
+                <div class="header-actions">
+                    <span>Today</span>
+                    <button class="btn-customize-widgets">Customize widgets</button>
+                </div>
+            </section>
+
+            <section class="summary-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Revenue</span>
+                        <i class="fas fa-ellipsis-h card-menu-icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="amount">$25K</p>
+                        <span class="percentage increase">+11.01%</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>Visits</span>
+                        <i class="fas fa-ellipsis-h card-menu-icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="amount">367K</p>
+                        <span class="percentage increase">+9.15%</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>Orders</span>
+                        <i class="fas fa-ellipsis-h card-menu-icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="amount">56</p>
+                        <span class="percentage decrease">-0.56%</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>Active Users</span>
+                        <i class="fas fa-ellipsis-h card-menu-icon"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="amount">239K</p>
+                        <span class="percentage decrease">-1.48%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="charts-and-tables">
+                <div class="chart-container revenue-chart-container">
+                    <div class="chart-header">
+                        <h3>Revenue</h3>
+                        <div>
+                            <select name="revenue-period" id="revenue-period">
+                                <option value="this-week">This week</option>
+                                <option value="last-week">Last week</option>
+                                <option value="this-month">This month</option>
+                            </select>
+                            <button class="orders-btn">Orders</button>
+                        </div>
+                    </div>
+                    <canvas id="revenueChart"></canvas>
+                    <p class="chart-peak-info">Fri: 18,288</p>
+                </div>
+
+                <div class="top-selling-products-container widget">
+                    <div class="widget-header">
+                        <h3>Top Selling Products</h3>
+                        <select name="products-period" id="products-period">
+                            <option value="this-week">This week</option>
+                            <option value="last-week">Last week</option>
+                        </select>
+                        <i class="fas fa-ellipsis-h widget-menu-icon"></i>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product name</th>
+                                <th>Price</th>
+                                <th>Sold</th>
+                                <th>Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Speed force</td>
+                                <td>$79.49</td>
+                                <td>82</td>
+                                <td>$6,518.18</td>
+                            </tr>
+                            <tr>
+                                <td>Cross bag</td>
+                                <td>$128.50</td>
+                                <td>37</td>
+                                <td>$4,754.50</td>
+                            </tr>
+                            <tr>
+                                <td>Gloves</td>
+                                <td>$39.99</td>
+                                <td>64</td>
+                                <td>$2,559.36</td>
+                            </tr>
+                             <tr>
+                                <td>Wax candle</td>
+                                <td>$20.00</td>
+                                <td>184</td>
+                                <td>$3,680.00</td>
+                            </tr>
+                             <tr>
+                                <td>Short bodysuits</td>
+                                <td>$28.49</td>
+                                <td>64</td>
+                                <td>$1,985.81</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+            </section>
+        </main>
+
+        <aside class="right-panel">
+            <div class="recent-events widget">
+                <div class="widget-header">
+                     <h3>Recent events</h3>
+                    <select name="events-period" id="events-period">
+                        <option value="this-week">This week</option>
+                        <option value="last-week">Last week</option>
+                    </select>
+                </div>
+                <ul>
+                    <li>
+                        <span class="event-tag new-order">NEW ORDER</span> <span class="event-time">5M AGO</span>
+                        <p>#123456 from <strong>Chris</strong> for <strong>$53.00</strong></p>
+                    </li>
+                    </ul>
+                <a href="#" class="see-all">See all</a>
+            </div>
+
+            <div class="inventory widget">
+                 <div class="widget-header">
+                    <h3>Inventory</h3>
+                    <select name="inventory-sort" id="inventory-sort">
+                        <option value="descending">Descending</option>
+                        <option value="ascending">Ascending</option>
+                    </select>
+                </div>
+                <ul>
+                    <li>
+                        <p>Beats Earbuds</p>
+                        <div class="inventory-bar-container">
+                            <div class="inventory-bar" style="width: 86.5%;"></div>
+                        </div>
+                        <span>451 / 521 Sold</span>
+                        <span>86.5%</span>
+                    </li>
+                    </ul>
+                <a href="#" class="see-all">See all</a>
+            </div>
+        </aside>
+    </div>    
+    <script src="src/js/script.js"></script>
+</body>
+</html>
