@@ -24,6 +24,49 @@ This project implements an AI-powered e-commerce analytics and forecasting syste
   - Python
   - Scikit-learn
   - TensorFlow/PyTorch
+  - 
+## 📁 Folder structure:
+```bash
+DAP_Ai_Project/
+├── frontend/
+│   ├── src/
+│   │   ├── css/
+│   │   │   └── styles.css
+│   │   ├── images/
+│   │   │   ├── Overview.png
+│   │   │   └── Overview (1).png
+│   │   └── js/
+│   │       └── script.js
+├── index.html
+├── dark.html
+├── backend/                 # Backend xử lý REST API / AI model
+│   ├── app/
+│   │   ├── main.py          # FastAPI entry
+│   │   ├── routers/
+│   │   │   ├── orders.py
+│   │   │   └── forecast.py
+│   │   └── services/
+│   │       └── model.py     # Gọi model AI hoặc Prophet
+│   └── requirements.txt
+├── data_pipeline/           # Kafka Producer + Spark Consumer
+│   ├── kafka_producer.py    # Faker sinh dữ liệu + đẩy lên Kafka
+│   ├── spark_stream.py      # Spark đọc Kafka, ghi MongoDB
+│   └── schema.py
+├── ai_models/               # Các model AI tích hợp
+│   ├── prophet_forecast.py
+│   ├── lstm_forecast.py
+│   └── huggingface_api.py
+├── datasets/                # Dataset mẫu
+│   └── sample_orders.csv
+├── docker/                  # File docker-compose, Dockerfile cho từng service
+│   ├── Dockerfile.backend
+│   ├── Dockerfile.spark
+│   └── docker-compose.yml
+├── .env                     # Lưu token Hugging Face, connection string
+├── README.md
+└── notebooks/               # Jupyter test model hoặc EDA
+    └── forecasting_test.ipynb
+```
 
 ## 🛠️ Setup Instructions
 1. Clone the repository
