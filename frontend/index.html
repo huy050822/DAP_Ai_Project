@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAP_PROJECT</title>    
+    <title>DAP_PROJECT</title> 
+    <link rel="icon" href="/frontend/src/images/LOGO_huy-removebg-preview.png" type="image/x-icon">   
     <link rel="stylesheet" href="src/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">            
             <div class="logo-section">
-                <img src="src/images/logo.png" alt="Logo" class="logo dark-logo">
+                <img src="/frontend/src/images/LOGO_huy-removebg-preview.png" alt="Logo" class="logo dark-logo">
             </div>
             <nav class="sidebar-nav">
                 <ul>
@@ -58,12 +60,12 @@
                     </li>
                 </ul>
             </nav>
-            <div class="sidebar-footer">
+            <!-- <div class="sidebar-footer">
                 <a href="#" class="logout-button">
                     <img src="src/images/logout-icon.png" alt="Logout" class="nav-icon">
                     <span>Logout</span>
                 </a>
-            </div>
+            </div> -->
         </aside>
 
         <main class="main-content">
@@ -149,7 +151,49 @@
                         </div>
                     </div>
                     <canvas id="revenueChart"></canvas>
-                    <p class="chart-peak-info">Fri: 18,288</p>
+                    <p class="chart-peak-info"></p>
+                </div>
+
+                <div class="region-revenue widget">
+                    <div class="widget-header">
+                        <h3>Revenue by Region</h3>
+                        <i class="fas fa-ellipsis-h widget-menu-icon"></i>
+                    </div>
+                    <div class="world-map">
+                        <svg width="100%" viewBox="0 0 1000 500">
+                            <path class="world-map-path" fill="#FFE4D6" d="M781.68,324.4l-2.31,8.68l-12.53,4.23l-3.75-4.4l-1.82,0.5l3.4,13.12l5.09,0.57l6.79,2.57v2.57l3.11-0.57l4.53-6.27v-5.13l2.55-5.13l2.83,0.57l-3.4-7.13l-0.52-4.59L781.68,324.4L781.68,324.4z M722.48,317.57l-0.28,2.28l6.79,11.41h1.98l14.15,23.67l5.66,0.57l2.83-8.27l-4.53-2.85l-0.85-4.56L722.48,317.57L722.48,317.57z M789.53,349.11l2.26,2.77l-1.47,4.16v0.79h3.34l1.18-10.4l1.08,0.3l1.96,9.5l1.87,0.5l1.77-4.06l-1.77-6.14l-1.47-2.67l4.62-3.37l-1.08-1.49l-4.42,2.87h-1.18l-2.16-3.17l0.69-1.39l3.64-1.78l5.5,1.68l1.67-0.1l4.13-3.86l-1.67-1.68l-3.83,2.97h-2.46l-3.73-1.78l-2.65,0.1l-2.95,4.75l-1.87,8.22L789.53,349.11L789.53,349.11z M814.19,330.5l-1.87,4.55l2.95,3.86h0.98l1.28-2.57l0.69-0.89l-1.28-1.39l-1.87-0.69L814.19,330.5L814.19,330.5z M819.99,345.45l-4.03,0.89l-1.18,1.29l0.98,1.68l2.65-0.99l1.67-0.99l4.62,0.99l1.67-2.97l-0.69-1.09l-1.67,0.69L819.99,345.45L819.99,345.45z"/>
+                        </svg>
+                    </div>
+                    <div class="region-stats">
+                        <div class="region-item">
+                            <span class="region-name">New York</span>
+                            <div class="region-progress">
+                                <div class="region-bar" style="width: 49%"></div>
+                            </div>
+                            <span class="region-value">49%</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">San Francisco</span>
+                            <div class="region-progress">
+                                <div class="region-bar" style="width: 25%"></div>
+                            </div>
+                            <span class="region-value">25%</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">Sydney</span>
+                            <div class="region-progress">
+                                <div class="region-bar" style="width: 15%"></div>
+                            </div>
+                            <span class="region-value">15%</span>
+                        </div>
+                        <div class="region-item">
+                            <span class="region-name">Singapore</span>
+                            <div class="region-progress">
+                                <div class="region-bar" style="width: 11%"></div>
+                            </div>
+                            <span class="region-value">11%</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="top-selling-products-container widget">
@@ -204,6 +248,21 @@
                         </tbody>
                     </table>
                     <a href="#" class="see-all">See all</a>
+                </div>
+
+                <div class="top-ads widget">
+                    <div class="widget-header">
+                        <h3>Top Ads</h3>
+                        <i class="fas fa-ellipsis-h widget-menu-icon"></i>
+                    </div>
+                    <canvas id="topAdsChart" style="max-width:220px;margin:auto;"></canvas>
+                    <ul class="ads-legend">
+                        <li><span style="color:#f4c542;">●</span> Fashion Ads campaign <span style="float:right;">38.6k reach</span></li>
+                        <li><span style="color:#6fcf97;">●</span> Gadget Ads campaign <span style="float:right;">30.8k reach</span></li>
+                        <li><span style="color:#9b51e0;">●</span> Books Ads campaign <span style="float:right;">22.5k reach</span></li>
+                        <li><span style="color:#56ccf2;">●</span> Sports Ads campaign <span style="float:right;">5.0k reach</span></li>
+                        <li><span style="color:#f2994a;">●</span> Groceries Ads campaign <span style="float:right;">3.1k reach</span></li>
+                    </ul>
                 </div>
             </section>
         </main>

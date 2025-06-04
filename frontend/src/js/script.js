@@ -50,52 +50,65 @@ document.addEventListener('DOMContentLoaded', function() {
             type: 'line',
             data: {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Revenue',
-                    data: [9000, 12000, 10000, 15000, 18288, 17000, 16000],
-                    borderColor: 'rgb(221, 107, 32)',
-                    backgroundColor: 'rgba(221, 107, 32, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                },
-                {
-                    label: 'Orders',
-                    data: [8000, 10000, 11000, 13000, 16000, 14000, 15000],
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    hidden: true,
-                }]
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: [9000, 15000, 12000, 17000, 18288, 21000, 27000],
+                        borderColor: 'rgb(221, 107, 32)',
+                        backgroundColor: 'rgba(221, 107, 32, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgb(221, 107, 32)',
+                        order: 1
+                    },
+                    {
+                        label: 'Orders',
+                        data: [11000, 12000, 14000, 16000, 17000, 25000, 28000],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgb(75, 192, 192)',
+                        order: 2
+                    }
+                ]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: document.body.classList.contains('dark-mode') ? '#404040' : '#e0e0e0'
-                        },
-                        ticks: {
-                            color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#333333',
-                            callback: function(value) {
-                                return value >= 1000 ? (value / 1000) + 'K' : value;
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            color: document.body.classList.contains('dark-mode') ? '#404040' : '#e0e0e0'
-                        },
-                        ticks: {
-                            color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#333333'
-                        }
-                    }
-                },
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: '#e0e0e0'
+                        },
+                        ticks: {
+                            color: '#333333'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#e0e0e0'
+                        },
+                        ticks: {
+                            color: '#333333'
+                        },
+                        beginAtZero: true,
+                        suggestedMax: 36000
                     }
                 }
             }
@@ -113,6 +126,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 revenueChart.update();
             });
         }
+    }
+
+    // Top Ads Pie Chart
+    const topAdsCtx = document.getElementById('topAdsChart');
+    if (topAdsCtx) {
+        new Chart(topAdsCtx, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Fashion Ads campaign',
+                    'Gadget Ads campaign',
+                    'Books Ads campaign',
+                    'Sports Ads campaign',
+                    'Groceries Ads campaign'
+                ],
+                datasets: [{
+                    data: [38600, 30800, 22500, 5000, 3100],
+                    backgroundColor: [
+                        '#f4c542', // Fashion
+                        '#6fcf97', // Gadget
+                        '#9b51e0', // Books
+                        '#56ccf2', // Sports
+                        '#f2994a'  // Groceries
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
     }
 
     // Mobile sidebar functionality

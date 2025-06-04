@@ -919,3 +919,84 @@ html.dark-mode, body.dark-mode {
 .dark-mode .card-body .percentage {
     color: #fff !important;
 }
+
+/* Revenue by Region */
+.region-revenue {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.world-map {
+    margin: 20px 0;
+    background: white;
+}
+
+.world-map svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.world-map-path {
+    transition: fill 0.3s ease;
+}
+
+.world-map-path:hover {
+    fill: #FFD1B9;
+}
+
+.region-stats {
+    margin-top: 20px;
+}
+
+.region-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.region-name {
+    width: 120px;
+    color: var(--text-primary);
+}
+
+.region-progress {
+    flex: 1;
+    height: 4px;
+    background: #F1F1F1;
+    border-radius: 2px;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+.region-bar {
+    height: 100%;
+    background: #FF9900;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.region-value {
+    width: 40px;
+    text-align: right;
+    color: var(--text-secondary);
+}
+
+/* Dark mode adjustments */
+.dark-mode .region-revenue {
+    background: var(--card-bg);
+}
+
+.dark-mode .region-progress {
+    background: rgba(255,255,255,0.1);
+}
+
+.dark-mode .world-map-path {
+    fill: #2D3748;
+}
+
+.dark-mode .world-map-path:hover {
+    fill: #4A5568;
+}
