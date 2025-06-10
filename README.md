@@ -24,7 +24,6 @@ This project implements an AI-powered e-commerce analytics and forecasting syste
   - Python
   - Scikit-learn
   - TensorFlow/PyTorch
-  - 
 ## 📁 Folder structure:
 ```bash
 DAP_Ai_Project/
