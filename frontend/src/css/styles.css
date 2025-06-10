@@ -121,11 +121,15 @@ ul {
 .dashboard-container {
     display: flex;
     min-height: 100vh;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
 }
 
 /* --- Sidebar --- */
 .sidebar {
     width: 260px;
+    min-width: 260px;
     background: #FFFFFF;
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -135,13 +139,12 @@ ul {
 }
 
 .logo-section {
-    padding: 28px 0;
+    padding: 2px 0;
     text-align: center;
 }
 
 .logo {
-    width: 32px;
-    height: 32px;
+    width: 50px;
 }
 
 .sidebar-nav {
@@ -247,6 +250,7 @@ ul {
 .main-content {
     margin-left: 260px;
     flex: 1;
+    max-width: calc(100% - 260px);
     padding: 24px 32px;
     background: var(--bg-main);
 }
@@ -353,8 +357,8 @@ ul {
 /* --- Summary Cards --- */
 .summary-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
     margin-bottom: 30px;
 }
 
@@ -397,8 +401,8 @@ ul {
 /* --- Charts and Tables Section --- */
 .charts-and-tables {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Tỉ lệ cho Revenue chart và Top selling */
-    gap: 20px;
+    grid-template-columns: 3fr 2fr;
+    gap: 24px;
     margin-bottom: 30px;
 }
 
@@ -437,11 +441,16 @@ ul {
 
 /* Revenue Chart */
 .revenue-chart-container {
-    /* CSS cho chart container */
+    height: 400px;
+    max-height: 400px;
+    min-height: 400px;
 }
 #revenueChart { /* Canvas cho biểu đồ */
-    width: 100% !important; /* Quan trọng để Chart.js điều chỉnh kích thước */
-    height: 300px !important; /* Điều chỉnh chiều cao */
+    width: 100% !important;
+    height: 300px !important;
+    max-height: 300px !important;
+    min-height: 300px !important;
+    aspect-ratio: 16/9;
 }
 .chart-peak-info {
     text-align: center;
@@ -454,6 +463,7 @@ ul {
 .top-selling-products-container table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 .top-selling-products-container th,
 .top-selling-products-container td {
@@ -480,7 +490,8 @@ ul {
 
 /* --- Right Panel --- */
 .right-panel {
-    width: 300px; /* Điều chỉnh chiều rộng */
+    width: 300px;
+    min-width: 300px;
     padding: 20px;
     background-color: var(--primary-bg); /* Hoặc màu khác nếu muốn */
     border-left: 1px solid var(--border-color); /* Đường phân cách mờ */
@@ -538,37 +549,52 @@ ul {
 
 
 /* Responsive (Ví dụ cơ bản) */
-@media (max-width: 1200px) {
-    .charts-and-tables {
-        grid-template-columns: 1fr; /* Stack các chart và table trên màn hình nhỏ hơn */
+@media (min-width: 1601px) {
+    .dashboard-container {
+        margin: 0 auto;
     }
+}
+
+@media (max-width: 1600px) {
+    .dashboard-container {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 1400px) {
+    .summary-cards {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+    
+    .charts-and-tables {
+        grid-template-columns: 1fr;
+    }
+    
     .right-panel {
-        display: none; /* Ẩn panel phải trên màn hình nhỏ, hoặc chuyển vị trí */
+        display: none;
+    }
+}
+
+@media (max-width: 1200px) {
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .sidebar {
-        /* Tạm thời ẩn đi, JS sẽ xử lý việc toggle */
-        transform: translateX(-100%);
-        position: fixed;
-        z-index: 1000;
-        transition: transform 0.3s ease-in-out;
+    .main-content {
+        margin-left: 0;
+        max-width: 100%;
     }
+    
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
     .sidebar.open {
         transform: translateX(0);
-    }
-    .main-content {
-        margin-left: 0; /* Full width khi sidebar ẩn */
-    }
-    .menu-toggle {
-        display: block; /* Hiện icon menu */
-    }
-    .summary-cards {
-        grid-template-columns: 1fr 1fr; /* 2 card một hàng */
-    }
-    .header-right .search-bar {
-        display: none; /* Ẩn search bar trên mobile để tiết kiệm không gian */
     }
 }
 
@@ -929,13 +955,14 @@ html.dark-mode, body.dark-mode {
 }
 
 .world-map {
+    height: 200px;
     margin: 20px 0;
-    background: white;
 }
 
 .world-map svg {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
 }
 
 .world-map-path {
@@ -948,6 +975,8 @@ html.dark-mode, body.dark-mode {
 
 .region-stats {
     margin-top: 20px;
+    max-height: 180px;
+    overflow-y: auto;
 }
 
 .region-item {
@@ -968,9 +997,8 @@ html.dark-mode, body.dark-mode {
     background: #F1F1F1;
     border-radius: 2px;
     margin: 0 15px;
-    overflow: hidden;
+    overflow: hidden; /* Để bo tròn các góc của thanh bên trong */
 }
-
 .region-bar {
     height: 100%;
     background: #FF9900;
