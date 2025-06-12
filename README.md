@@ -27,7 +27,7 @@ This project implements an AI-powered e-commerce analytics and forecasting syste
 ## 📁 Folder structure:
 ```bash
 DAP_Ai_Project/
-├── frontend/
+├── frontend/                        # Giao diện web (HTML/CSS/JS)
 │   ├── src/
 │   │   ├── css/
 │   │   │   └── styles.css
@@ -36,35 +36,54 @@ DAP_Ai_Project/
 │   │   │   └── Overview (1).png
 │   │   └── js/
 │   │       └── script.js
-├── index.html
-├── dark.html
-├── backend/                 # Backend xử lý REST API / AI model
+│   ├── index.html
+│   └── dark.html
+
+├── backend/                         # FastAPI backend
 │   ├── app/
-│   │   ├── main.py          # FastAPI entry
+│   │   ├── main.py                  # FastAPI entrypoint
 │   │   ├── routers/
 │   │   │   ├── orders.py
-│   │   │   └── forecast.py
+│   │   │   ├── forecast.py
+│   │   │   └── prompts.py           # NEW: Lưu prompt từ AI
 │   │   └── services/
-│   │       └── model.py     # Gọi model AI hoặc Prophet
+│   │       ├── model.py            # Xử lý model AI / Prophet
+│   │       ├── mongodb.py          # NEW: Kết nối MongoDB
+│   │       └── prompt_store.py     # NEW: Lưu/truy vấn prompt
 │   └── requirements.txt
-├── data_pipeline/           # Kafka Producer + Spark Consumer
-│   ├── kafka_producer.py    # Faker sinh dữ liệu + đẩy lên Kafka
-│   ├── spark_stream.py      # Spark đọc Kafka, ghi MongoDB
-│   └── schema.py
-├── ai_models/               # Các model AI tích hợp
+
+├── node_backend/                   # (Tuỳ chọn) Node.js backend nếu web cần gọi trực tiếp
+│   ├── server.js
+│   ├── routes/
+│   │   └── prompt.js
+│   └── models/
+│       └── Prompt.js
+│   └── package.json
+
+├── ai_models/                      # Các model AI tích hợp
 │   ├── prophet_forecast.py
 │   ├── lstm_forecast.py
 │   └── huggingface_api.py
-├── datasets/                # Dataset mẫu
+
+├── data_pipeline/                  # Kafka Producer + Spark Consumer
+│   ├── kafka_producer.py
+│   ├── spark_stream.py
+│   └── schema.py
+
+├── datasets/                       # Dataset mẫu
 │   └── sample_orders.csv
-├── docker/                  # File docker-compose, Dockerfile cho từng service
+
+├── notebooks/                      # Jupyter Notebook test model
+│   └── forecasting_test.ipynb
+
+├── docker/                         # Docker hóa toàn bộ project
 │   ├── Dockerfile.backend
 │   ├── Dockerfile.spark
-│   └── docker-compose.yml
-├── .env                     # Lưu token Hugging Face, connection string
+│   ├── Dockerfile.node             # NEW: Cho node_backend
+│   └── docker-compose.yml          # Dịch vụ: FastAPI, Node, MongoDB, Kafka, Spark
+
+├── .env                            # Token HuggingFace, Mongo URI, v.v.
 ├── README.md
-└── notebooks/               # Jupyter test model hoặc EDA
-    └── forecasting_test.ipynb
 ```
 
 ## 🛠️ Setup Instructions
