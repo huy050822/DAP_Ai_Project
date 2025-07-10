@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAP_PROJECT</title> 
-    <link rel="icon" href="/frontend/src/images/LOGO_huy-removebg-preview.png" type="image/x-icon">   
-    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="icon" href="/src/images/LOGO_huy-removebg-preview.png" type="image/x-icon">   
+    <link rel="stylesheet" href="./src/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
     
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">            
             <div class="logo-section">
-                <img src="/frontend/src/images/LOGO_huy-removebg-preview.png" alt="Logo" class="logo dark-logo">
+                <img src="/src/images/LOGO_huy-removebg-preview.png" alt="Logo" class="logo dark-logo">
             </div>
             <nav class="sidebar-nav">
                 <ul>
@@ -42,7 +44,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/frontend/chat.html">
+                        <a href="/chat.html">
                             <i class="fas fa-robot nav-icon"></i>
                             <span>AI-based Pricing & Recommendations</span>
                         </a>
@@ -71,7 +73,7 @@
                         <i class="fas fa-moon"></i>
                     </a>
                     <i class="fas fa-bell notification-icon"></i>
-                    <img src="placeholder-avatar.png" alt="User Avatar" class="user-avatar">
+                    <img src="src/images/avatar-placeholder.png" alt="User Avatar" class="user-avatar">
                 </div>
             </header>
 

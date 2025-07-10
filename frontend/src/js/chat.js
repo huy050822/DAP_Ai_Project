@@ -1,127 +1,155 @@
-// Initialize WebSocket connection
-const socket = io('http://localhost:8000');
 let chatHistory = [];
+const API_URL = 'http://localhost:8000';
 
 document.addEventListener('DOMContentLoaded', function() {
     const chatMessages = document.querySelector('.chat-messages');
     const chatInput = document.querySelector('.chat-input textarea');
     const sendButton = document.querySelector('.send-btn');
-    const newChatBtn = document.querySelector('.new-chat-btn');
     const chatHistoryContainer = document.querySelector('.chat-history');
     const productList = document.querySelector('.product-list');
+    const newChatBtn = document.querySelector('.new-chat-btn');
 
-    // Handle send message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            // Add user message to chat
-            addMessage(message, 'user');
-            
-            // Send message to server
-            socket.emit('chat_message', {
-                message: message,
-                timestamp: new Date().toISOString()
-            });
+    // Auto-resize textarea
+    chatInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
 
-            // Clear input
-            chatInput.value = '';
-            
-            // Show typing indicator
-            showTypingIndicator();
-        }
+    // Format analysis results for display
+    function formatAnalysisResult(content) {
+        if (!content) return '';
+
+        // Làm nổi bật tên sản phẩm trong danh sách top sản phẩm
+        let lines = content.split('\n');
+        lines = lines.map(line => {
+            // Nếu là dòng số thứ tự sản phẩm (ví dụ: 1. Tên sản phẩm)
+            const match = line.match(/^([0-9]+)\. (.+)$/);
+            if (match) {
+                // Thêm class product-name-highlight và badge nếu là top 1
+                let badge = '';
+                if (match[1] === '1') badge = ' <span class="product-badge">Best Seller</span>';
+                return `<span class="product-name-highlight">${match[1]}. ${match[2]}</span>${badge}`;
+            }
+            if (line.startsWith('•')) {
+                return `<div class="analysis-point">${line}</div>`;
+            } else if (line.startsWith('-')) {
+                return `<div class="analysis-detail">${line}</div>`;
+            }
+            return line;
+        });
+        return lines.join('<br>');
     }
 
     // Add message to chat
-    function addMessage(message, type, products = []) {
+    function appendMessage(content, type = 'user', messageType = 'text') {
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', `${type}-message`);
-        messageDiv.textContent = message;
-        chatMessages.appendChild(messageDiv);
+        messageDiv.className = `message ${type}`;
         
-        // If there are product suggestions, update the product list
-        if (products.length > 0) {
-            updateProductSuggestions(products);
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        
+        if (type === 'user') {
+            contentDiv.textContent = content;
+        } else {
+            contentDiv.innerHTML = messageType === 'analysis' ? 
+                formatAnalysisResult(content) : 
+                content.replace(/\n/g, '<br>');
         }
-
-        // Scroll to bottom
+        
+        messageDiv.appendChild(contentDiv);
+        chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Add to chat history
-        chatHistory.push({
-            type,
-            message,
-            timestamp: new Date().toISOString()
-        });
-
-        // Update chat history sidebar
-        updateChatHistory();
+        // Add to history if it's an assistant message
+        if (type === 'assistant') {
+            addToHistory(content);
+        }
     }
 
-    // Show AI is typing indicator
-    function showTypingIndicator() {
-        const indicator = document.createElement('div');
-        indicator.classList.add('message', 'ai-message', 'typing-indicator');
-        indicator.textContent = 'AI is typing...';
-        chatMessages.appendChild(indicator);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    // Add to chat history
+    function addToHistory(content) {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        const title = content.split('\n')[0];
+        historyItem.innerHTML = `
+            <div class="history-title">${title.substring(0, 30)}...</div>
+            <div class="history-time">${new Date().toLocaleTimeString()}</div>
+        `;
+        chatHistoryContainer.insertBefore(historyItem, chatHistoryContainer.firstChild);
+
+        // Add click event to load this conversation
+        historyItem.addEventListener('click', () => {
+            chatInput.value = title;
+            sendMessage();
+        });
     }
 
     // Update product suggestions
     function updateProductSuggestions(products) {
-        productList.innerHTML = '';
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-            productCard.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <h4>${product.name}</h4>
-                <p>${product.description}</p>
-                <span class="price">$${product.price}</span>
-            `;
-            productList.appendChild(productCard);
-        });
-    }
-
-    // Update chat history sidebar
-    function updateChatHistory() {
-        chatHistoryContainer.innerHTML = '';
-        const groupedHistory = groupChatsByDate(chatHistory);
+        if (!productList) return;
         
-        Object.entries(groupedHistory).forEach(([date, messages]) => {
-            const historyItem = document.createElement('div');
-            historyItem.classList.add('history-item');
-            historyItem.innerHTML = `
-                <div class="history-date">${formatDate(date)}</div>
-                <div class="history-preview">${messages[0].message.substring(0, 30)}...</div>
-            `;
-            chatHistoryContainer.appendChild(historyItem);
-        });
+        productList.innerHTML = products.map(product => `
+            <div class="product-card">
+                <div class="product-name">${product.product_name}</div>
+                <div class="product-price">$${product.sales_per_order.toLocaleString()}</div>
+                <div class="product-stats">
+                    <span>Quantity: ${product.order_quantity}</span>
+                </div>
+            </div>
+        `).join('');
     }
 
-    // Group chats by date
-    function groupChatsByDate(history) {
-        return history.reduce((groups, item) => {
-            const date = new Date(item.timestamp).toLocaleDateString();
-            if (!groups[date]) {
-                groups[date] = [];
+    // Send message function
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Clear input and reset height
+        chatInput.value = '';
+        chatInput.style.height = 'auto';
+        
+        // Add user message
+        appendMessage(message, 'user');
+
+        // Show typing indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'message assistant loading';
+        loadingDiv.innerHTML = '<div class="message-content"><div class="typing-indicator"><span></span><span></span><span></span></div></div>';
+        chatMessages.appendChild(loadingDiv);
+
+        try {
+            const response = await fetch('/api/forecast/chat/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: 'demo',
+                    message: message
+                })
+            });
+
+            const data = await response.json();
+            loadingDiv.remove();
+
+            if (data.status === 'success') {
+                appendMessage(data.response, 'assistant', 'analysis');
+                
+                // Update product suggestions if available
+                if (data.analysis_results?.top_products) {
+                    updateProductSuggestions(data.analysis_results.top_products);
+                }
+            } else {
+                throw new Error('Invalid response format');
             }
-            groups[date].push(item);
-            return groups;
-        }, {});
+        } catch (error) {
+            console.error('Error:', error);
+            loadingDiv.remove();
+            appendMessage('Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại sau.', 'assistant');
+        }
     }
 
-    // Format date
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return new Intl.DateTimeFormat('en-US', {
-            month: 'short',
-            day: 'numeric'
-        }).format(date);
-    }
-
-    // Event Listeners
-    sendButton.addEventListener('click', sendMessage);
-    
+    // Event listeners
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -129,35 +157,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    sendButton.addEventListener('click', sendMessage);
+
     newChatBtn.addEventListener('click', () => {
         chatMessages.innerHTML = '';
-        chatHistory = [];
-        updateChatHistory();
-        
-        // Add welcome message
-        const welcomeDiv = document.createElement('div');
-        welcomeDiv.classList.add('welcome-message');
-        welcomeDiv.innerHTML = `
-            <h2>How can I help you today?</h2>
-            <p>Ask me about product recommendations, pricing, or any other questions about our products!</p>
-        `;
-        chatMessages.appendChild(welcomeDiv);
+        showWelcomeMessage();
     });
 
-    // Socket event handlers
-    socket.on('ai_response', (data) => {
-        // Remove typing indicator
-        const typingIndicator = document.querySelector('.typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
+    // Show welcome message
+    function showWelcomeMessage() {
+        appendMessage(`Xin chào! Tôi là trợ lý AI, tôi có thể giúp bạn phân tích:
 
-        // Add AI response
-        addMessage(data.message, 'ai', data.products || []);
-    });
+• Sản phẩm bán chạy nhất
+• Phân tích khách hàng
+• Tình trạng giao hàng
+• Dự báo xu hướng
 
-    socket.on('error', (error) => {
-        console.error('Socket error:', error);
-        addMessage('Sorry, there was an error processing your request. Please try again.', 'ai');
-    });
+Bạn muốn biết thông tin gì?`, 'assistant', 'analysis');
+    }
+
+    // Initialize
+    showWelcomeMessage();
 });

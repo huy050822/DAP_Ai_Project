@@ -16,11 +16,11 @@
     --card-bg: #FFFFFF;
     --hover-bg: #F7FAFC;
     --active-bg: #FFF6ED;
-    --primary-color: #DD6B20;
+    --primary-color: #E84A1C;
     --chart-grid: #E2E8F0;
     --bg-body: var(--bg-primary);
     --bg-main: var(--bg-primary);
-    --accent-color: #DD6B20;
+    --accent-color: #E84A1C;
     --green-positive: #22C55E;
     --red-negative: #EF4444;
 }

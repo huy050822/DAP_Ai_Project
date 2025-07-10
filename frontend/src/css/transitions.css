@@ -1,0 +1,88 @@
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+.slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+/* Dark mode transition */
+body, .dashboard-container, .sidebar, .main-content,
+.quick-actions-panel, .chat-container, .modal-content,
+.message-content, .chat-input-wrapper {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Quick action button transitions */
+.quick-action-btn {
+    transition: all 0.2s ease-in-out;
+}
+.quick-action-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Message animation */
+.message {
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading animation */
+.loading-dots:after {
+    content: '.';
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60% { content: '...'; }
+    80%, 100% { content: ''; }
+}
+
+/* Theme toggle animation */
+.theme-toggle i {
+    transition: transform 0.3s ease;
+}
+.theme-toggle:hover i {
+    transform: rotate(180deg);
+}
+
+/* Sidebar hover effects */
+.sidebar-nav a {
+    transition: all 0.2s ease;
+}
+.sidebar-nav a:hover {
+    transform: translateX(5px);
+}
+
+/* Button press effect */
+.action-btn {
+    transition: transform 0.1s ease;
+}
+.action-btn:active {
+    transform: scale(0.95);
+}
