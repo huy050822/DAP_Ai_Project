@@ -1,0 +1,22 @@
+FROM python:3.9-slim
+
+# Install Java
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install PySpark
+RUN pip install pyspark==3.4.0
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy the Spark streaming script
+COPY data_pipeline/spark_stream.py /app/
+COPY data_pipeline/schema.py /app/
+
+WORKDIR /app
+
+CMD ["python", "spark_stream.py"]
