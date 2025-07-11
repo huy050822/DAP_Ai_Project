@@ -16,7 +16,6 @@ db = client.ecommerce
 # Initialize Faker
 fake = Faker()
 
-# Create sample products
 product_names = [
     "Laptop", "Smartphone", "Tablet", "Headphones", "Smart Watch", 
     "Camera", "Speaker", "Mouse", "Keyboard", "Monitor",
